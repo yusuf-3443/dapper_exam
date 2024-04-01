@@ -1,0 +1,91 @@
+﻿create table schools
+(
+	id serial primary key,
+	title varchar(50) not null,
+	levelcount int,
+	createdat date,
+	updatedat date
+)
+
+create table students
+(
+	id serial primary key,
+	student_code varchar(12) unique,
+	fullname varchar(50) not null,
+	gender varchar(10),
+	email varchar(75) unique,
+	phone varchar(15) unique,
+	schoolid int references schools(id),
+	createdat date,
+	updatedat date
+)
+
+select * from students
+
+create table parents
+(
+	id serial primary key,
+	parent_code varchar(12) unique,
+	fullname varchar(50) not null,
+	email varchar(100) unique,
+	phone varchar(20) unique,
+	createdat date,
+	updatedat date
+)
+
+create table students_parents
+(
+	id serial primary key,
+	studentid int references students(id),
+	parentid int references parents(id)
+)
+
+create table subjects
+(
+	id serial primary key,
+	title varchar(100) not null,
+	schoolid int references schools(id),
+	stage int,
+	createdat date,
+	updatedat date
+)
+
+create table teachers
+(
+	id serial primary key,
+	teacher_code varchar(12) unique,
+	fullname varchar(75) not null,
+	gender varchar(10),
+	email varchar(75) unique,
+	phone varchar(15) unique,
+	working_days int,
+	createdat date,
+	updatedat date
+)
+
+create table classrooms
+(
+	id serial primary key,
+	capacity int,
+	description varchar(100),
+	createdat date,
+	updatedat date
+) 
+
+create table classes
+(
+	id serial primary key,
+	class_name varchar(100) not null,
+	subjectid int references subjects(id),
+	teacherid int references teachers(id),
+	classroomid int references classrooms(id),
+	createdat date,
+	updatedat date
+)
+
+create table classes_students
+(
+	id serial primary key,
+	classid int references classes(id),
+	studentid int references students(id)
+)
